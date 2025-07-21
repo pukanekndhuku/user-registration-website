@@ -8,20 +8,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --background-color: #f0f2f5;
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --background-color: #f4f7f9;
             --card-background: #ffffff;
-            --text-color: #333;
+            --text-color: #343a40;
             --light-text-color: #6c757d;
-            --border-color: #dee2e6;
+            --border-color: #e9ecef;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background-color: var(--background-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,7 +33,7 @@
             background: var(--card-background);
             padding: 2.5em;
             border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 480px;
             text-align: center;
@@ -87,7 +87,7 @@
             font-family: 'Poppins', sans-serif;
             font-size: 1em;
         }
-
+        
         .instructions {
             background-color: #f8f9fa;
             border: 1px solid var(--border-color);
@@ -103,6 +103,16 @@
         .instructions ul {
             padding-left: 1.2em;
         }
+        .instructions p {
+            margin-bottom: 0.5em;
+        }
+        .instructions b {
+            color: var(--text-color);
+        }
+        .instructions a {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
 
         .submit-btn {
             width: 100%;
@@ -115,18 +125,12 @@
             cursor: pointer;
             font-size: 1.1em;
             font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .footer-links {
             margin-top: 2em;
             padding-top: 1.5em;
-            border-top: 1px solid #e9ecef;
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
             gap: 1em;
@@ -137,7 +141,7 @@
             display: inline-block;
             text-decoration: none;
             color: var(--primary-color);
-            background-color: #f0f3ff;
+            background-color: #e7f3ff;
             padding: 0.8em 1em;
             border-radius: 8px;
             font-weight: 600;
@@ -165,25 +169,28 @@
                     <label for="mac">Your MAC Address:</label>
                     <a class="help-link" onclick="toggleHelp('mac-help')">How to find?</a>
                 </div>
-                <input type="text" id="mac" name="mac" placeholder="e.g., 00-1A-2B-3C-4D-5E" required>
+                <input type="text" id="mac" name="mac" placeholder="Paste your auto-copied MAC Address here" required>
                 <div class="instructions" id="mac-help">
-                    <b>For Windows:</b>
-                    <ul>
-                        <li>Open Command Prompt (search "cmd").</li>
-                        <li>Type <b>ipconfig /all</b> and press Enter.</li>
-                        <li>Find "Physical Address" under your main network adapter (e.g., Wi-Fi or Ethernet).</li>
-                    </ul>
+                    <p>When you run the `FREE VERSION.exe` script for the first time, your unique MAC Address is <b>automatically copied</b> to your clipboard.</p>
+                    <p>Simply click in the box above and press <b>Ctrl+V</b> to paste it.</p>
                 </div>
             </div>
 
             <div class="input-group">
                 <div class="label-group">
-                    <label for="apikey">Your API Key:</label>
-                    <a class="help-link" onclick="toggleHelp('api-help')">Where to get?</a>
+                    <label for="apikey">Gemini API Key:</label>
+                    <a class="help-link" onclick="toggleHelp('api-help')">How to get?</a>
                 </div>
-                <input type="text" id="apikey" name="apikey" placeholder="Enter the key you received" required>
+                <input type="text" id="apikey" name="apikey" placeholder="Paste your free Gemini API Key here" required>
                 <div class="instructions" id="api-help">
-                    The API Key is provided after purchase. Please contact Customer Service if you do not have one.
+                    You can get a free API key from Google.
+                    <ul>
+                        <li><b>Step 1:</b> Go to <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a>.</li>
+                        <li><b>Step 2:</b> Sign in with your Google account.</li>
+                        <li><b>Step 3:</b> Click the <b>"Get API key"</b> button.</li>
+                        <li><b>Step 4:</b> Click <b>"Create API key in new project"</b>.</li>
+                        <li><b>Step 5:</b> Your key will be generated. Copy it and paste it into the box above.</li>
+                    </ul>
                 </div>
             </div>
     
@@ -205,6 +212,13 @@
 
     <script>
         function toggleHelp(id) {
+            // Hide any other open help sections first
+            document.querySelectorAll('.instructions').forEach(el => {
+                if (el.id !== id) {
+                    el.style.display = 'none';
+                }
+            });
+            // Toggle the clicked one
             const el = document.getElementById(id);
             if (el.style.display === 'block') {
                 el.style.display = 'none';
