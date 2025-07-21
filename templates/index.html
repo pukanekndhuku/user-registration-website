@@ -8,24 +8,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         :root {
-            --primary-color: #007bff;
-            --secondary-color: #0056b3;
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
             --background-color: #f0f2f5;
             --card-background: #ffffff;
             --text-color: #333;
-            --light-text-color: #666;
-            --border-color: #ddd;
+            --light-text-color: #6c757d;
+            --border-color: #dee2e6;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,15 +33,10 @@
             background: var(--card-background);
             padding: 2.5em;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
         }
 
         .header h1 {
@@ -58,13 +49,34 @@
             color: var(--light-text-color);
             margin-bottom: 2em;
         }
+        
+        .input-group {
+            margin-bottom: 1.5em;
+            text-align: left;
+        }
+
+        .label-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
 
         label {
-            display: block;
-            text-align: left;
-            margin: 1em 0 0.5em 0;
             color: var(--text-color);
             font-weight: 600;
+        }
+
+        .help-link {
+            font-size: 0.8em;
+            color: var(--primary-color);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .help-link:hover {
+            text-decoration: underline;
         }
 
         input {
@@ -74,19 +86,28 @@
             border: 1px solid var(--border-color);
             font-family: 'Poppins', sans-serif;
             font-size: 1em;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        .instructions {
+            background-color: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1em;
+            margin-top: 0.7em;
+            font-size: 0.85em;
+            color: var(--light-text-color);
+            text-align: left;
+            display: none; /* Hidden by default */
+        }
+        
+        .instructions ul {
+            padding-left: 1.2em;
         }
 
         .submit-btn {
             width: 100%;
             padding: 1em;
-            margin-top: 2em;
+            margin-top: 1em;
             border: none;
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
@@ -99,15 +120,15 @@
         
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.35);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .footer-links {
-            margin-top: 2.5em;
+            margin-top: 2em;
             padding-top: 1.5em;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #e9ecef;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             gap: 1em;
         }
 
@@ -116,7 +137,7 @@
             display: inline-block;
             text-decoration: none;
             color: var(--primary-color);
-            background-color: #e7f3ff;
+            background-color: #f0f3ff;
             padding: 0.8em 1em;
             border-radius: 8px;
             font-weight: 600;
@@ -134,26 +155,63 @@
     <div class="container">
         <div class="header">
             <h1>Jigelurani Scripts Corner</h1>
-            <p>Register your details to get started.</p>
+            <p>Register your details to gain access.</p>
         </div>
         
         <form action="/submit" method="post">
-            <label for="mac">MAC Address:</label>
-            <input type="text" id="mac" name="mac" placeholder="e.g., 00:1A:2B:3C:4D:5E" required>
-            
-            <label for="apikey">Your API Key:</label>
-            <input type="text" id="apikey" name="apikey" placeholder="Enter the API key provided" required>
+
+            <div class="input-group">
+                <div class="label-group">
+                    <label for="mac">Your MAC Address:</label>
+                    <a class="help-link" onclick="toggleHelp('mac-help')">How to find?</a>
+                </div>
+                <input type="text" id="mac" name="mac" placeholder="e.g., 00-1A-2B-3C-4D-5E" required>
+                <div class="instructions" id="mac-help">
+                    <b>For Windows:</b>
+                    <ul>
+                        <li>Open Command Prompt (search "cmd").</li>
+                        <li>Type <b>ipconfig /all</b> and press Enter.</li>
+                        <li>Find "Physical Address" under your main network adapter (e.g., Wi-Fi or Ethernet).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="label-group">
+                    <label for="apikey">Your API Key:</label>
+                    <a class="help-link" onclick="toggleHelp('api-help')">Where to get?</a>
+                </div>
+                <input type="text" id="apikey" name="apikey" placeholder="Enter the key you received" required>
+                <div class="instructions" id="api-help">
+                    The API Key is provided after purchase. Please contact Customer Service if you do not have one.
+                </div>
+            </div>
     
-            <label for="enddate">End Date:</label>
-            <input type="date" id="enddate" name="enddate" required>
+            <div class="input-group">
+                <div class="label-group">
+                    <label for="enddate">Subscription End Date:</label>
+                </div>
+                <input type="date" id="enddate" name="enddate" required>
+            </div>
             
-            <button type="submit" class="submit-btn">Submit Details</button>
+            <button type="submit" class="submit-btn">Submit & Verify</button>
         </form>
 
         <div class="footer-links">
-            <a href="https://chat.whatsapp.com/HQlG7c8ZG8o9r8DjcLqfzh" target="_blank" class="footer-btn">Join WhatsApp Group 🟢</a>
-            <a href="https://wa.me/919154718144" target="_blank" class="footer-btn">Customer Service 💬</a>
+            <a href="https://chat.whatsapp.com/HQlG7c8ZG8o9r8DjcLqfzh" target="_blank" class="footer-btn">WhatsApp Group</a>
+            <a href="https://wa.me/919154718144" target="_blank" class="footer-btn">Customer Service</a>
         </div>
     </div>
+
+    <script>
+        function toggleHelp(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
